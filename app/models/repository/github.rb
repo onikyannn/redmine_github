@@ -45,6 +45,7 @@ class Repository::Github < ::Repository::Git
   # Will be executed from background jobs as:
   # rails runner 'Repository.fetch_changesets'
   def fetch_changesets
+    Rails.logger.info("> repository fetch_changesets")
     fetch_remote
     super
   end

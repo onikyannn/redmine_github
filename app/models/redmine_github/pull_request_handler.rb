@@ -33,6 +33,7 @@ module RedmineGithub
 
     def handle_push(repository, payload)
       issue = Issue.find_by(id: extract_issue_id(payload.dig('ref')))
+      Rails.logger.info("> handle_push issue #{issue}")
       return if issue.blank?
 
       PullRequest.where(issue: issue).find_each(&:sync)

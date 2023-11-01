@@ -9,15 +9,12 @@ module RedmineGithub
 
     def dispatch_event
       event = request.headers['X-GitHub-Event']
-      Rails.logger.info("> dispatch_event #{event}")
       case event
       when 'pull_request', 'pull_request_review', 'push', 'status'
-        Rails.logger.info("> PullRequestHandler.handle")
         PullRequestHandler.handle(@repository, event, params)
         head :ok
       else
         # ignore
-        Rails.logger.info("> PullRequestHandler.ignore")
         head :ok
       end
     end

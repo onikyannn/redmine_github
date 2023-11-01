@@ -49,12 +49,14 @@ module RedmineGithub::Scm::Adapters
     end
 
     def fetch_remote
+      Rails.logger.info("> adapter fetch_remote")
       return unless Dir.exist?(root_url)
 
       ENV['GIT_TERMINAL_PROMPT'] = '0'
       cmd_args = %w[fetch origin]
       cmd_args += %w[+refs/heads/*:refs/heads/* +refs/tags/*:refs/tags/*]
       cmd_args += %w[--prune]
+      Rails.logger.info("> adapter git_cmd #{cmd_args}")
       git_cmd(cmd_args)
     end
   end
