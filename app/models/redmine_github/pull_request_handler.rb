@@ -32,12 +32,12 @@ module RedmineGithub
     end
 
     def handle_push(repository, payload)
+      repository.fetch_changesets
       issue = Issue.find_by(id: extract_issue_id(payload.dig('ref')))
       Rails.logger.info("> handle_push issue #{issue}")
       return if issue.blank?
 
       PullRequest.where(issue: issue).find_each(&:sync)
-      repository.fetch_changesets
     end
 
     def handle_status(_repository, payload)
