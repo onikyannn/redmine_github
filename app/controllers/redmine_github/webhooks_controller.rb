@@ -8,7 +8,7 @@ module RedmineGithub
     before_action :set_repository, :verify_signature
 
     def dispatch_event
-      event = request.headers['x-github-event']
+      event = request.headers['X-GitHub-Event']
       case event
       when 'pull_request', 'pull_request_review', 'push', 'status'
         PullRequestHandler.handle(@repository, event, params)
